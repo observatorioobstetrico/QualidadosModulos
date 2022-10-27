@@ -1,17 +1,17 @@
+#teste para importacao e atualizacao dos itens ---------------
 library(readr)
 library(readxl)
 library(dplyr)
 library(DT)
 library(shinyjs)
-library(plotly)
 library(shinydashboard)
-library(ggridges)
+#library(ggridges)
 library(ggplot2)
 library(tidyr)
 library(forcats)
 library(rjson)
 library(kableExtra)
-library(shinyalert)
+#library(shinyalert)
 #PRIMEIRA IMPORTAÇÃO -----------------------------
 #Tem que rever essa parte, ela nao parece muito util
 jsonfile <- c(fromJSON(file = "data1/data_values.json"))
@@ -23,15 +23,15 @@ var_names_join <- list()
 var_names_join <- append(var_names_join,paste(names(fields[1]), "(", fields[[1]], ")"))
 for (field in 2:length(fields)){
   if((names(fields[field]) %in% names(relatorio_df)) && !(names(fields[field]) %in% jsonfile$ignore))
-  var_names_join <- append(var_names_join, paste(names(fields[field]), "(", fields[[field]], ")"))
-  }
+    var_names_join <- append(var_names_join, paste(names(fields[field]), "(", fields[[field]], ")"))
+}
 
 for(f in 1:length(names(relatorio_df))){
   if(names(relatorio_df[f]) %in% jsonfile$datetime){
-  relatorio_df[[f]] <- substring(relatorio_df[[f]], 1, nchar(relatorio_df[[f]]))
-  relatorio_df[[f]] <- as.Date(x = relatorio_df[[f]], tryFormats = c("%d/%m/%y"))
-    }
+    relatorio_df[[f]] <- substring(relatorio_df[[f]], 1, nchar(relatorio_df[[f]]))
+    relatorio_df[[f]] <- as.Date(x = relatorio_df[[f]], tryFormats = c("%d/%m/%y"))
   }
+}
 #DADOS DE INCOMPLETUDE ------------------------
 dados_incom <- readRDS("data1/dados_incompletude.rds")
 for (variavel in jsonfile$variaveis_tabela) {
@@ -93,14 +93,14 @@ dados_incon[['ID_MUNICIP']] <- dados_incon$ID_REGIONA
 dados_incon <- dados_incon %>%
   mutate(
     classi_gesta_puerp = case_when(
-    CS_GESTANT == 1  ~ "1tri",
-    CS_GESTANT == 2  ~ "2tri",
-    CS_GESTANT == 3  ~ "3tri",
-    CS_GESTANT == 4  ~ "IG_ig",
-    CS_GESTANT == 5 &
-      PUERPERA == 1 ~ "puerp",
-    CS_GESTANT == 9 & PUERPERA == 1 ~ "puerp",
-    TRUE ~ "não"),
+      CS_GESTANT == 1  ~ "1tri",
+      CS_GESTANT == 2  ~ "2tri",
+      CS_GESTANT == 3  ~ "3tri",
+      CS_GESTANT == 4  ~ "IG_ig",
+      CS_GESTANT == 5 &
+        PUERPERA == 1 ~ "puerp",
+      CS_GESTANT == 9 & PUERPERA == 1 ~ "puerp",
+      TRUE ~ "não"),
     dt_sint = as.Date(DT_SIN_PRI, format = "%d/%m/%Y"),
     dt_nasc = as.Date(DT_NASC, format = "%d/%m/%Y"),
     ano = lubridate::year(dt_sint),
@@ -168,4 +168,4 @@ names(vars_incon) <- colnames(dados_incon[,167:(ncol(dados_incon)-5)])
 var1 <- unname(vars_incon)[1:4]
 
 Var_micro_incon <- dados_incon[,c(1:166,185,188)] %>% colnames()
-Var_micro_incon<-Var_micro_incon[stringr::str_detect('SG_UF|ID_MUNICIP',Var_micro_incon) == F]
+Var_micro_incon <- Var_micro_incon[stringr::str_detect('SG_UF|ID_MUNICIP',Var_micro_incon) == F]

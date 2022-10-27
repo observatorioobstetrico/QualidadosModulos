@@ -10,7 +10,7 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    useShinyjs(),useShinyalert(),
+    useShinyjs(),
             dashboardPage(
               dashboardHeader(title = "Qualidados", titleWidth = 160),
               dashboardSidebar(

@@ -12,6 +12,7 @@ mod_SIVEP_incompletude_ui <- function(id, tabname, vars_incon , descricao,
     ns <- NS(id)
     library(shiny)
     library(shinydashboard)
+    install.packages('plotly', repos='http://cran.rstudio.com/')
     library(plotly)
     useShinyjs()
     tabItem(tabName = tabname,
@@ -175,7 +176,7 @@ mod_SIVEP_incompletude_ui <- function(id, tabname, vars_incon , descricao,
                           #GRAFICOS
                           tabPanel(
                             "Gráficos",
-                            plotlyOutput(ns("graficoCompleteness"),
+                            plotly::plotlyOutput(ns("graficoCompleteness"),
                                                 height = 'auto')),
 
                           #TABELAS QUANT
@@ -246,7 +247,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
     if(indicador == 'incom'){
 
 
-      output$graficoCompleteness <- renderPlotly({
+      output$graficoCompleteness <- plotly::renderPlotly({
     #FILTRAGEM PELOS FILTROS SELECIONADOS ------------
         #VARIAVEIS SELECIONADAS NO FILTRO
         for(var in input$Graf_Variaveis_Incon){
@@ -389,7 +390,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
             angle=45
           ))
 
-        ggplotly(g, height=length(variaveis)*125) %>% layout(legend = list(orientation = "h", y = 20))
+        plotly::ggplotly(g, height=length(variaveis)*125) %>% layout(legend = list(orientation = "h", y = 20))
     })
 
 
@@ -530,7 +531,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
     if(indicador == 'implau'){
 
 
-      output$graficoCompleteness <- renderPlotly({
+      output$graficoCompleteness <- plotly::renderPlotly({
            variaveis <- vector()
 
            for(var in input$Graf_Variaveis_Incon) {
@@ -673,7 +674,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
           angle = 45
         ))
 
-      ggplotly(g, height = length(variaveis) * 125) %>%
+      plotly::ggplotly(g, height = length(variaveis) * 125) %>%
         layout(legend = list(orientation = "h", y = 20))})
 
 
@@ -918,7 +919,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
     #GRAFICO INCONSISTENCIA ----------
     if(indicador == 'incon'){
 
-      output$graficoCompleteness <- renderPlotly({
+      output$graficoCompleteness <- plotly::renderPlotly({
         #FILTRAGEM PELOS FILTROS SELECIONADOS ------------
         #VARIAVEIS SELECIONADAS NO FILTRO
         variaveis <- NA
@@ -1037,7 +1038,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
             angle = 45
           ))
 
-        ggplotly(g, height = c(length(variaveis) * 150)) %>%
+        plotly::ggplotly(g, height = c(length(variaveis) * 150)) %>%
           layout(legend = list(orientation = "h", y = 20))})
 
       selectDataFiltro <- reactive({

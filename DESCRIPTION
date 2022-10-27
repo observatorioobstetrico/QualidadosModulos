@@ -22,6 +22,7 @@ Imports:
     leaflet.extras,
     magrittr,
     modelsummary,
+    pkgload,
     questionr,
     reactable,
     readxl,
