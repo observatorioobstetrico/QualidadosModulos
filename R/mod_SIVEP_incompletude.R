@@ -12,8 +12,10 @@ mod_SIVEP_incompletude_ui <- function(id, tabname, vars_incon , descricao,
     ns <- NS(id)
     library(shiny)
     library(shinydashboard)
-    install.packages('plotly', repos='http://cran.rstudio.com/')
-    library(plotly)
+    #library(shinyWidgets)
+    # install.packages('shinyWidgets', repos='http://cran.rstudio.com/')
+    # install.packages('plotly', repos='http://cran.rstudio.com/')
+    #library(plotly)
     useShinyjs()
     tabItem(tabName = tabname,
               #DESCRICAO -----------
@@ -243,6 +245,7 @@ mod_SIVEP_incompletude_ui <- function(id, tabname, vars_incon , descricao,
 mod_SIVEP_incompletude_server <- function(id, indicador){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    #install.packages('plotly', repos='http://cran.rstudio.com/')
     #GRAFICO INCOMPLETUDE ------------
     if(indicador == 'incom'){
 
@@ -390,7 +393,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
             angle=45
           ))
 
-        plotly::ggplotly(g, height=length(variaveis)*125) %>% layout(legend = list(orientation = "h", y = 20))
+        plotly::ggplotly(g, height=length(variaveis)*125) %>%   plotly::layout(legend = list(orientation = "h", y = 20))
     })
 
 
@@ -675,7 +678,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
         ))
 
       plotly::ggplotly(g, height = length(variaveis) * 125) %>%
-        layout(legend = list(orientation = "h", y = 20))})
+        plotly::layout(legend = list(orientation = "h", y = 20))})
 
 
       selectDataAux <- reactive({
@@ -1039,7 +1042,7 @@ mod_SIVEP_incompletude_server <- function(id, indicador){
           ))
 
         plotly::ggplotly(g, height = c(length(variaveis) * 150)) %>%
-          layout(legend = list(orientation = "h", y = 20))})
+          plotly::layout(legend = list(orientation = "h", y = 20))})
 
       selectDataFiltro <- reactive({
         variaveis <- NA

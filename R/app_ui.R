@@ -6,6 +6,9 @@
 #'
 
 app_ui <- function(request) {
+  library(shinyjs)
+  library(shinydashboard)
+  library(shiny)
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
@@ -103,7 +106,7 @@ golem_add_external_resources <- function() {
     "www",
     app_sys("app/www")
   )
-  includeCSS("inst/app/www/estilo1.css")
+  #includeCSS("~/inst/app/www/estilo1.css")
   tags$script(HTML("$('body').addClass('fixed');"))
   tags$head(tags$style(
     HTML(
@@ -149,6 +152,7 @@ golem_add_external_resources <- function() {
                               }
                               '
     ),
+    tags$link(rel = "stylesheet", type = "text/css", href = "estilo1.css"),
     HTML("hr {border-top: 1px solid #0A1E3C;}")
   ))
   }
